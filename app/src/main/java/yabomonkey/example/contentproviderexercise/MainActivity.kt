@@ -50,6 +50,9 @@ class MainActivity : AppCompatActivity() {
                     contacts.add(it.getString(it.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)))
                 }
             }
+
+            Log.d(TAG, "fab onClick: ends")
+
         }
     }
 
