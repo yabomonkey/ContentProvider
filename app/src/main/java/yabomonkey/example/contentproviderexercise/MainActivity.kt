@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             Log.d(TAG, "fab onClick: Starts")
             val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+
+            val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
+                projection,
+                null,
+                null,
+                ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
         }
     }
 
