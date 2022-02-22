@@ -51,6 +51,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            val adapter = ArrayAdapter<String>(this, R.layout.contact_detail, R.id.name, contacts)
+            binding.root.findViewById<ListView>(R.id.contact_names).adapter = adapter
+
             Log.d(TAG, "fab onClick: ends")
 
         }
