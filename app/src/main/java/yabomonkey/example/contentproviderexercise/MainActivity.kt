@@ -73,6 +73,29 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate: ends")
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        Log.d(TAG, "onRequestPermissionsResult: starts")
+        when (requestCode) {
+            REQUEST_CODE_READ_CONTACTS -> {
+                readGranted = if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, YAY! Do the
+                    // contacts-related task we need to do.
+                    Log.d(TAG, "onRequestPermissionsResult: permission granted")
+                    true
+                } else {
+                    //
+                    //
+                    Log.d(TAG, "onRequestPermissionsResult: permission refused")
+                    false
+                }
+            }
+        }
+    }
+
     //test update 2
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
