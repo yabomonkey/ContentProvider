@@ -1,6 +1,7 @@
 package yabomonkey.example.contentproviderexercise
 
 import android.Manifest.permission.READ_CONTACTS
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.ui.AppBarConfiguration
 import yabomonkey.example.contentproviderexercise.databinding.ActivityMainBinding
@@ -31,8 +33,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val hasReadContactPermission = ContextCompat.checkSelfPermission(this, READ_CONTACTS)
-
         Log.d(TAG, ".onCreate: checkSelfPermission returned $hasReadContactPermission")
+
+        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED){
+            Log.d(TAG, "Permission Granted")
+            readGranted = true      // TODO DON'T DO THIS
+        } else {
+            Log.d(TAG, "REQUESTING PERMISSION")
+            ActivityCompat.requestPermissions(this, arrayOf(READ_CONTACTS), REQUEST_CODE_READ_CONTACTS)
+        }
 
 //        val navController = findNavController(R.id.nav_host_fragment_content_main)
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -61,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "fab onClick: ends")
 
         }
+        Log.d(TAG, "onCreate: ends")
     }
 
     //test update 2
