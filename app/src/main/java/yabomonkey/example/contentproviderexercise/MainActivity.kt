@@ -11,6 +11,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import yabomonkey.example.contentproviderexercise.databinding.ActivityMainBinding
 
 private const val TAG = "MainActivity"
@@ -35,6 +37,25 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             Log.d(TAG, "fab onClick: Starts")
             val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+
+            val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
+                projection,
+                null,
+                null,
+                ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+
+            val contacts = arrayListOf<String>()        //create a list to hold our contacts
+            cursor?.use {                   // loop through the cursor
+                while (it.moveToNext()) {
+                    contacts.add(it.getString(it.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)))
+                }
+            }
+
+            val adapter = ArrayAdapter<String>(this, R.layout.contact_detail, R.id.name, contacts)
+            binding.root.findViewById<ListView>(R.id.contact_names).adapter = adapter
+
+            Log.d(TAG, "fab onClick: ends")
+
         }
     }
 
