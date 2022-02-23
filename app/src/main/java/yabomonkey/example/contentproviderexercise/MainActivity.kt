@@ -1,24 +1,24 @@
 package yabomonkey.example.contentproviderexercise
 
+import android.Manifest.permission.READ_CONTACTS
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.navigation.ui.AppBarConfiguration
 import yabomonkey.example.contentproviderexercise.databinding.ActivityMainBinding
 
 private const val TAG = "MainActivity"
+private const val REQUEST_CODE_READ_CONTACTS = 1
 
 class MainActivity : AppCompatActivity() {
 
+    private var readGranted = false
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -29,6 +29,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+
+        val hasReadContactPermission = ContextCompat.checkSelfPermission(this, READ_CONTACTS)
+
+        Log.d(TAG, ".onCreate: checkSelfPermission returned $hasReadContactPermission")
 
 //        val navController = findNavController(R.id.nav_host_fragment_content_main)
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
