@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.ui.AppBarConfiguration
+import com.google.android.material.snackbar.Snackbar
 import yabomonkey.example.contentproviderexercise.databinding.ActivityMainBinding
 
 private const val TAG = "MainActivity"
@@ -49,24 +50,31 @@ class MainActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener { view ->
             Log.d(TAG, "fab onClick: Starts")
-            val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+            if(readGranted) {
+                val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
 
-            val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
-                projection,
-                null,
-                null,
-                ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+                val cursor = contentResolver.query(
+                    ContactsContract.Contacts.CONTENT_URI,
+                    projection,
+                    null,
+                    null,
+                    ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
+                )
 
-            val contacts = arrayListOf<String>()        //create a list to hold our contacts
-            cursor?.use {                   // loop through the cursor
-                while (it.moveToNext()) {
-                    contacts.add(it.getString(it.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)))
+                val contacts = arrayListOf<String>()        //create a list to hold our contacts
+                cursor?.use {                   // loop through the cursor
+                    while (it.moveToNext()) {
+                        contacts.add(it.getString(it.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)))
+                    }
                 }
+
+                val adapter =
+                    ArrayAdapter<String>(this, R.layout.contact_detail, R.id.name, contacts)
+                binding.root.findViewById<ListView>(R.id.contact_names).adapter = adapter
+            } else {
+                Snackbar.make(view, "Please grant permissions to contacts", Snackbar.LENGTH_LONG)
+                    .setAction("DO IT NOW", null).show()
             }
-
-            val adapter = ArrayAdapter<String>(this, R.layout.contact_detail, R.id.name, contacts)
-            binding.root.findViewById<ListView>(R.id.contact_names).adapter = adapter
-
             Log.d(TAG, "fab onClick: ends")
 
         }
