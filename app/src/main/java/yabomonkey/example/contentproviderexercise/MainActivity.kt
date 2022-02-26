@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "onRequestPermissionsResult: permission refused")
                     false
                 }
+//                binding.fab.isEnabled = readGranted
             }
         }
     }
