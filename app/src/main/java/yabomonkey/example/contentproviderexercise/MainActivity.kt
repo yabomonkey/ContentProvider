@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.webkit.PermissionRequest
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -74,7 +75,9 @@ class MainActivity : AppCompatActivity() {
                 binding.root.findViewById<ListView>(R.id.contact_names).adapter = adapter
             } else {
                 Snackbar.make(view, "Please grant permissions to contacts", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Action", null).show()
+                    .setAction("Permissions", {
+                        Toast.makeText(it.context, "Snack bar action clicked", Toast.LENGTH_SHORT).show()
+                    }).show()
             }
             Log.d(TAG, "fab onClick: ends")
 
