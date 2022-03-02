@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
 //                binding.fab.isEnabled = readGranted
             }
     }
-    
+
 
     //test update 2
 
