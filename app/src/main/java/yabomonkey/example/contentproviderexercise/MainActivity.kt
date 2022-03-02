@@ -41,14 +41,17 @@ class MainActivity : AppCompatActivity() {
         val hasReadContactPermission = ContextCompat.checkSelfPermission(this, READ_CONTACTS)
         Log.d(TAG, ".onCreate: checkSelfPermission returned $hasReadContactPermission")
 
-        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED){
-            Log.d(TAG, "Permission Granted")
-//            readGranted = true      // TODO DON'T DO THIS
-        } else {
+//        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED){
+//            Log.d(TAG, "Permission Granted")
+////            readGranted = true      // TODO DON'T DO THIS
+//        } else {
+//            Log.d(TAG, "REQUESTING PERMISSION")
+//            ActivityCompat.requestPermissions(this, arrayOf(READ_CONTACTS), REQUEST_CODE_READ_CONTACTS)
+//        }
+        if (hasReadContactPermission != PackageManager.PERMISSION_GRANTED){
             Log.d(TAG, "REQUESTING PERMISSION")
             ActivityCompat.requestPermissions(this, arrayOf(READ_CONTACTS), REQUEST_CODE_READ_CONTACTS)
         }
-
 //        val navController = findNavController(R.id.nav_host_fragment_content_main)
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
 //        setupActionBarWithNavController(navController, appBarConfiguration)
@@ -111,30 +114,30 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate: ends")
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        Log.d(TAG, "onRequestPermissionsResult: starts")
-        when (requestCode) {
-            REQUEST_CODE_READ_CONTACTS -> {
-//                readGranted = if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        // permission was granted, YAY! Do the
-                        // contacts-related task we need to do.
-                        Log.d(TAG, "onRequestPermissionsResult: permission granted")
-//                        true
-                    } else {
-                        //
-                        //
-                        Log.d(TAG, "onRequestPermissionsResult: permission refused")
-//                        false
-                    }
-                }
-//                binding.fab.isEnabled = readGranted
-            }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        Log.d(TAG, "onRequestPermissionsResult: starts")
+//        when (requestCode) {
+//            REQUEST_CODE_READ_CONTACTS -> {
+////                readGranted = if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                        // permission was granted, YAY! Do the
+//                        // contacts-related task we need to do.
+//                        Log.d(TAG, "onRequestPermissionsResult: permission granted")
+////                        true
+//                    } else {
+//                        //
+//                        //
+//                        Log.d(TAG, "onRequestPermissionsResult: permission refused")
+////                        false
+//                    }
+//                }
+////                binding.fab.isEnabled = readGranted
+//            }
+//    }
 
 
     //test update 2
