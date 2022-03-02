@@ -75,9 +75,6 @@ class MainActivity : AppCompatActivity() {
                 binding.root.findViewById<ListView>(R.id.contact_names).adapter = adapter
             } else {
                 Snackbar.make(view, "Please grant permissions to contacts", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Permissions", {
-                        Toast.makeText(it.context, "Snack bar action clicked", Toast.LENGTH_SHORT).show()
-                    }).show()
                     .setAction("Grant Access") {
                         Log.d(TAG, "SnackBar onClick: Starts")
                         if (ActivityCompat.shouldShowRequestPermissionRationale(
