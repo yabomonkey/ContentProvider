@@ -1,9 +1,12 @@
 package yabomonkey.example.contentproviderexercise
 
 import android.Manifest.permission.READ_CONTACTS
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -23,7 +26,7 @@ private const val REQUEST_CODE_READ_CONTACTS = 1
 
 class MainActivity : AppCompatActivity() {
 
-    private var readGranted = false
+//    private var readGranted = false
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -40,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED){
             Log.d(TAG, "Permission Granted")
-            readGranted = true      // TODO DON'T DO THIS
+//            readGranted = true      // TODO DON'T DO THIS
         } else {
             Log.d(TAG, "REQUESTING PERMISSION")
             ActivityCompat.requestPermissions(this, arrayOf(READ_CONTACTS), REQUEST_CODE_READ_CONTACTS)
@@ -52,7 +55,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener { view ->
             Log.d(TAG, "fab onClick: Starts")
-            if(readGranted) {
+//            if(readGranted) {
+            if (ContextCompat.checkSelfPermission(this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED){
                 val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
 
                 val cursor = contentResolver.query(
@@ -115,21 +119,23 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onRequestPermissionsResult: starts")
         when (requestCode) {
             REQUEST_CODE_READ_CONTACTS -> {
-                readGranted = if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, YAY! Do the
-                    // contacts-related task we need to do.
-                    Log.d(TAG, "onRequestPermissionsResult: permission granted")
-                    true
-                } else {
-                    //
-                    //
-                    Log.d(TAG, "onRequestPermissionsResult: permission refused")
-                    false
+//                readGranted = if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        // permission was granted, YAY! Do the
+                        // contacts-related task we need to do.
+                        Log.d(TAG, "onRequestPermissionsResult: permission granted")
+//                        true
+                    } else {
+                        //
+                        //
+                        Log.d(TAG, "onRequestPermissionsResult: permission refused")
+//                        false
+                    }
                 }
 //                binding.fab.isEnabled = readGranted
             }
-        }
     }
+    
 
     //test update 2
 
