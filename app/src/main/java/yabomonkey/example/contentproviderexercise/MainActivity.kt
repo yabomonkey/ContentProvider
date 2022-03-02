@@ -78,6 +78,31 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Permissions", {
                         Toast.makeText(it.context, "Snack bar action clicked", Toast.LENGTH_SHORT).show()
                     }).show()
+                    .setAction("Grant Access") {
+                        Log.d(TAG, "SnackBar onClick: Starts")
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                READ_CONTACTS
+                            )
+                        ) {
+                            Log.d(TAG, "SnackBar onClick: calling requestPermissions")
+                            ActivityCompat.requestPermissions(
+                                this,
+                                arrayOf(READ_CONTACTS),
+                                REQUEST_CODE_READ_CONTACTS
+                            )
+                        } else {
+                            //The user has permenantly denied the permission. Take them direct to the setings
+                            Log.d(TAG, "SnackBar onClick: Launching Setting")
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            val uri = Uri.fromParts("package", this.packageName, null)
+                            Log.d(TAG, "SnackBar onClick: URI is $uri")
+                            intent.data = uri
+                            this.startActivity(intent)
+                        }
+                        Log.d(TAG, "SnackBar onClick: Ends")
+                    }.show()
             }
             Log.d(TAG, "fab onClick: ends")
 
